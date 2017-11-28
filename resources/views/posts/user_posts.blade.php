@@ -8,8 +8,12 @@
                     @foreach($posts as $post)
                         <li class = "list-group-item">
                             {{$post->title}}
-                            <button type="button" class="btn btn-default">Edit</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                           <a href = "{{'/posts/'.$post->id.'/edit'}}" class="btn btn-sm btn-default pull-right">Edit</a>
+                            <form class="form-group pull-right" action="{{'/posts/'.$post->id}}" METHOD="post">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                                <button type="submit" class="btn btn-sm btn-danger pull-right" value="delete">Delete</button>
+                            </form>
                         </li>
                     @endforeach
                 </ul>
