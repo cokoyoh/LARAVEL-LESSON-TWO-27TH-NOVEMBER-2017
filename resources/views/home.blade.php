@@ -14,7 +14,7 @@
                         </div>
                     @endif
                         <ul class="list-group">
-                            <li class="list-group-item">Read Available Blogs</li>
+                            <li class="list-group-item"><a href = "/posts">Read Available Blogs</a></li>
                             <li class="list-group-item"><a href = "posts/create">Add New Blog</a> </li>
                             <li class="list-group-item">See Your Blogs</li>
                         </ul>
