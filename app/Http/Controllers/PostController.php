@@ -57,9 +57,9 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if(! $post){
-            return response('The post does not exist', 500);
+            return response('The post does not exist', 404);
         }
-        return view('post.show', compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -72,7 +72,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if(! $post){
-            return response('Resource not found!', 500);
+            return response('Resource not found!', 404);
         }
         return view('posts.edit', compact('post'));
     }
@@ -84,16 +84,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         $post = Post::find($id);
-        if(! $post){
-            return response('Trying to edit a post that does not exist', 500);
-        }
-        $post->title = $request->title;
-        $post->body = $request->body;
+        $post->title =  request('title');
+        $post->body =  request('body');
         $post->save();
-        return response('Post edited successfully', 200);
+        response('Post edited successfully', 200);
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -106,7 +104,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if(! $post){
-            return response('You are trying to delete a post that does not exist!', 500);
+            return response('You are trying to delete a post that does not exist!', 404);
         }
         $post->delete();
         return response('Post has been deleted!', 200);
