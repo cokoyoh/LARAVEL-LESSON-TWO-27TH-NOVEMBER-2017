@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -13,7 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -23,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -32,9 +35,14 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        Post::create([
+            'title' => request('title'),
+            'body' => request('body'),
+            'user_id' => Auth::user()->id
+        ]);
+        return response('Post created successfully', 200);
     }
 
     /**
@@ -45,7 +53,11 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        if(! $post){
+            return response('The post does not exist', 500);
+        }
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -56,7 +68,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if(! $post){
+            return response('Resource not found!', 500);
+        }
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -68,7 +84,14 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        if(! $post){
+            return response('Trying to edit a post that does not exist', 500);
+        }
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->save();
+        return response('Post edited successfully', 200);
     }
 
     /**
@@ -79,6 +102,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if(! $post){
+            return response('You are trying to delete a post that does not exist!', 500);
+        }
+        $post->delete();
+        return response('Post has been deleted!', 200);
     }
 }
