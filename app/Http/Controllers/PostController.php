@@ -42,7 +42,9 @@ class PostController extends Controller
             'body' => request('body'),
             'user_id' => Auth::user()->id
         ]);
-        return response('Post created successfully', 200);
+        $message = 'Post created successfully';
+        response( $message, 200);
+        return redirect(route('posts.create'));
     }
 
     /**
