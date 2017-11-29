@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Post;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,6 +41,7 @@ class PostController extends Controller
             'user_id' => Auth::user()->id
         ]);
         $message = 'Post created successfully';
+        session()->flash('message', $message);
         return redirect(route('posts.create'));
     }
 
@@ -56,6 +56,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if(! $post){
              $message = 'The post does not exist';
+            session()->flash('message', $message);
         }
         return view('posts.show', compact('post'));
     }
@@ -71,6 +72,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if(! $post){
              $message = 'Resource not found!';
+            session()->flash('message', $message);
         }
         return view('posts.edit', compact('post'));
     }
@@ -88,7 +90,8 @@ class PostController extends Controller
         $post->title =  request('title');
         $post->body =  request('body');
         $post->save();
-        $message = 'Post has been deleted!';
+        $message = 'Post has been edited successfully';
+        session()->flash('message', $message);
         return redirect(route('posts.user_posts'));
     }
 
@@ -103,9 +106,11 @@ class PostController extends Controller
         $post = Post::find($id);
         if(! $post){
             $message = 'You are trying to delete a post that does not exist!';
+            session()->flash('message', $message);
         }
         $post->delete();
         $message = 'Post has been deleted!';
+        session()->flash('message', $message);
         return redirect(route('posts.user_posts'));
     }
 }

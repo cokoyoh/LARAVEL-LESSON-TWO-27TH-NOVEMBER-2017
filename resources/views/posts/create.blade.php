@@ -3,6 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 col-md-10 col-lg-offset-1 col-md-offset-1">
+                @include('layouts.partials.message')
                 <h4>Create New Blog Post</h4>
                 <form method="post" action="/posts">
                     {{csrf_field()}}
