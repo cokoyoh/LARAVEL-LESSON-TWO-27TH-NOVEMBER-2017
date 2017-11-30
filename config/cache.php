@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
+    //change the default from file to database
+    'default' => env('CACHE_DRIVER', 'database'),
 
     /*
     |--------------------------------------------------------------------------
