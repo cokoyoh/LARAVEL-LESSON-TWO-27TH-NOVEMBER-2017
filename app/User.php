@@ -34,4 +34,9 @@ class User extends Authenticatable
     public function posts() {
         return $this->hasMany(Post::class);
     }
+    
+    //adding  name mutator
+    public function setNameAttribute($name) {
+        $this->attributes['name'] = ucfirst($name);
+    }
 }
