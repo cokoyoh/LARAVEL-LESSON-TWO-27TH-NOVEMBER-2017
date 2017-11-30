@@ -2,11 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use SoftDeletes; //global scope
     use Notifiable;
 
     /**
@@ -27,6 +29,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    //many to many relationship defined here
     public function roles() {
         return $this->belongsToMany(Role::class);
     }
