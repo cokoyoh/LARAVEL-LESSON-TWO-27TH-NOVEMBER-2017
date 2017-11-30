@@ -121,7 +121,11 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    //changed the default from single file log to daily logs
+    'log' => env('APP_LOG', 'daily'),
+
+    //adding the number of log files
+    'log_max_files' => env(30),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
