@@ -23,6 +23,9 @@ class AuthTest extends DuskTestCase
         $this->browse(function ($first, $second) {
             $first->loginAs(User::find(1))
                 ->visit('/home');
+
+            $second -> loginAs(User::find(6))
+                    ->visit('/posts/create');
         });
     }
 }
